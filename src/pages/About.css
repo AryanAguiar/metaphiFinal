@@ -1,0 +1,38 @@
+@keyframes marqueeScroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .marquee {
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px; /* ✅ Adjust width so only 5 images fit */
+    display: flex;
+    align-items: center;
+    background-color: #1a1c1e;
+    padding: 20px 0;
+  }
+  
+  .marquee-inner {
+    display: flex;
+    width: max-content;
+    animation: marqueeScroll 10s linear infinite;
+  }
+  
+  .marquee-logo {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+    margin-right: 30px;
+    flex-shrink: 0; /* ✅ Prevents images from resizing */
+  }
+  
+  /* ✅ Ensure only 5 images fit inside the marquee at a time */
+  .marquee-inner a:nth-child(n+6) {
+    display: none;
+  }
+  
