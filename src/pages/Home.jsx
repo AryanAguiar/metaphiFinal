@@ -12,6 +12,10 @@ import { ScrollTrigger } from "gsap/all";
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import svg1 from "../images/folder.png";
+import svg2 from "../images/handshake.svg";
+import svg3 from "../images/award.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 gsap.registerPlugin(ScrollTrigger);
 
 const slides = [
@@ -34,8 +38,8 @@ const slides = [
 
 const counters = [
   { value: 50, label: "Projects Completed", icon: svg1 },
-  { value: 40, label: "Trusted Partners", icon: "🤝" },
-  { value: 10, label: "Innovation Awards Won", icon: "🏆" },
+  { value: 40, label: "Trusted Partners", icon: svg2 },
+  { value: 10, label: "Innovation Awards Won", icon: svg3 },
 ];
 
 const Home = () => {
@@ -47,8 +51,35 @@ const Home = () => {
   const animationFrame = useRef(null);
   const lastTimestamp = useRef(performance.now());
   const headerRef = useRef(null);
+  const sectionRef = useRef([]);
+  const addToRefs = (el) => {
+    if (el && !sectionRef.current.includes(el)) {
+      sectionRef.current.push(el);
+    }
+  };
 
   useEffect(() => {
+
+    sectionRef.current.forEach((el, index) => {
+      gsap.fromTo(
+        el,
+        { opacity: 0, y: 80, scale: 0.95 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 90%",
+            toggleActions: "play none none reverse",
+          },
+          delay: index * 0.2,
+        }
+      );
+    });
+
     const animateElements = () => {
       gsap.fromTo(
         [textRef.current, subTextRef.current, buttonRef.current, imageRef.current],
@@ -106,11 +137,6 @@ const Home = () => {
     partner1,
   ];
 
-  const logoRefs = useRef([]);
-
-  // Ensure there are enough images to fill the screen
-  const duplicatedLogos = logos.length < 6 ? [...logos, ...logos, ...logos] : [...logos, ...logos];
-
   return (
     <>
       {/* Hero section */}
@@ -153,7 +179,7 @@ const Home = () => {
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 textShadow: "2px 2px 5px rgba(0, 0, 0, 0.3)",
-                fontSize: { xs: "20px", sm: "24px", md: "29px", lg: "36px", xl: "46px" },
+                fontSize: { xs: "20px", sm: "24px", md: "29px", lg: "36px", xl: "40px" },
               }}
             >
               {slides[currentIndex].title}
@@ -211,6 +237,7 @@ const Home = () => {
           </Box>
         </Box>
 
+        {/* stats section */}
         <Box
           sx={{
             display: "flex",
@@ -236,20 +263,20 @@ const Home = () => {
                   display: "flex",
                   alignItems: "center",
                   gap: 2,
-                  backgroundColor: "rgba(15, 5, 110, 0.1)",
+                  backgroundColor: "rgba(37, 4, 255, 0.29)",
                   padding: "15px 25px",
                   borderRadius: "50px",
+                  width: "250px"
                 }}
               >
-                {/* Icon */}
+
                 <Typography variant="h4" sx={{ fontSize: 40 }}>
-                  <img style={{width:"40px"}} src={counter.icon} alt="" />
+                  <img style={{ width: "40px" }} src={counter.icon} alt="" />
                 </Typography>
 
-                {/* Counter & Label */}
                 <Box sx={{ textAlign: "left" }}>
                   <Typography variant="h4" sx={{ fontWeight: "bold", }}>
-                    <CountUp start={0} end={counter.value} duration={4} />
+                    <CountUp start={0} end={counter.value} duration={4} />+
                   </Typography>
                   <Typography variant="body1">{counter.label}</Typography>
                 </Box>
@@ -260,9 +287,8 @@ const Home = () => {
 
       </Container>
 
-
       {/* Partners section */}
-      <Container maxWidth={"xl"} disableGutters sx={{ px: 6 }}>
+      <Container maxWidth={"xl"} disableGutters sx={{ px: 6, py: 9 }}>
         <Typography
           ref={headerRef}
           variant="h4"
@@ -311,6 +337,156 @@ const Home = () => {
             </SwiperSlide>
           ))}
         </Swiper>
+
+      </Container>
+
+      {/* description section */}
+      <Container maxWidth={false} disableGutters sx={{ px: 6, py: 9, position: "relative", width: "100%" }}>
+        <Box sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          background: "linear-gradient(45deg, rgba(74, 144, 226, 0.1), rgba(144, 19, 254, 0.1))",
+          zIndex: -1,
+          filter: "blur(60px)",
+        }} />
+
+        <Box sx={{
+          maxWidth: "1454px",
+          width: "100%",
+          margin: "0 auto",
+          display: "block",
+        }}>
+          {/* first section */}
+          <Box
+            ref={addToRefs}
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              alignItems: "center",
+              gap: { xs: 4, md: 6 },
+              py: { xs: 4, md: 6 },
+              textAlign: { xs: "center", md: "left" }
+            }}
+          >
+            <Typography
+              variant="h3"
+              sx={{
+                flex: 1,
+                minWidth: "300px",
+                fontWeight: "bold",
+                background: "linear-gradient(90deg, #007FFF, #0047AB)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                fontSize: { xs: "24px", sm: "30px", md: "36px", lg: "42px", xl: "50px" }
+              }}
+            >
+              Leading Mobile App Development, Software Development & IT Consulting Company
+
+            </Typography>
+
+            <Box sx={{ flex: 1, maxWidth: "600px" }} >
+              <Typography variant="body1" sx={{ flex: 1, color: "#ddd", lineHeight: 1.8, fontSize: { xs: "20px", sm: "22px", md: "16px", lg: "21px", xl: "24px" }, mt: 2 }}>
+              Founded in 2025, Metaphi Innovations is a leading Mobile App, Software Development, and Web Development company, driving digital transformation for businesses worldwide. As a trusted technology partner, we empower startups and enterprises alike to innovate, scale, and lead in their industries.
+              </Typography>
+            </Box>
+
+
+          </Box>
+
+          <Box
+            ref={addToRefs}
+            sx={{
+              display: "flex",
+              justifyContent: { xs: "center", md: "left" },
+              mt: 2,
+              width: "100%",
+            }}
+          >
+            <Button
+              variant="outlined"
+              sx={{
+                borderRadius: "30px",
+                color: "#fff",
+                borderColor: "#9013FE",
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                "&:hover": {
+                  backgroundColor: "#9013FE",
+                  color: "#fff",
+                },
+              }}
+            >
+              Learn More <FontAwesomeIcon icon={faArrowRight} />
+            </Button>
+          </Box>
+          {/* second section */}
+          <Box
+            ref={addToRefs}
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: "column-reverse", md: "row" },
+              alignItems: "center",
+              gap: { xs: 4, md: 6 },
+              py: { xs: 4, md: 6 },
+              textAlign: { xs: "center", md: "left" },
+              mt: 9
+            }}
+          >
+            <Box sx={{ flex: 1, maxWidth: "600px" }} >
+              <Typography variant="body1" sx={{ flex: 1, color: "#ddd", lineHeight: 1.8, fontSize: { xs: "20px", sm: "22px", md: "16px", lg: "21px", xl: "24px" } }}>
+              Unlock growth opportunities with robust software solutions, system modernization, and next-gen technologies—powered by a leading development company.
+              </Typography>
+            </Box>
+
+            <Typography
+              variant="h3"
+              sx={{
+                flex: 1,
+                minWidth: "300px",
+                fontWeight: "bold",
+                background: "linear-gradient(90deg, #00FF7F,rgb(5, 107, 47))",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                fontSize: { xs: "24px", sm: "30px", md: "36px", lg: "42px", xl: "50px" }
+              }}
+            >
+              Accelerating Business Growth with Intelligent Solutions
+            </Typography>
+
+          </Box>
+
+          <Box
+            ref={addToRefs}
+            sx={{
+              display: "flex",
+              justifyContent: { xs: "center", md: "left" },
+              mt: 2,
+              width: "100%",
+            }}
+          >
+            <Button
+              variant="outlined"
+              sx={{
+                borderRadius: "30px",
+                color: "#fff",
+                borderColor: "#D7263D",
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                "&:hover": {
+                  backgroundColor: "#D7263D",
+                  color: "#fff",
+                },
+              }}
+            >
+              Services <FontAwesomeIcon icon={faArrowRight} />
+            </Button>
+          </Box>
+        </Box>
 
       </Container>
     </>
