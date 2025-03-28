@@ -1,0 +1,52 @@
+body {
+  background-color: #111;
+  color: white;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.timeline-wrapper {
+  height: 500vh; /* Allows enough scroll space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-container {
+  position: relative;
+  width: 60%;
+  height: 100vh; /* Full screen height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.timeline {
+  position: absolute;
+  width: 100%;
+}
+
+.event {
+  background: #222;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  text-align: center;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.event h2 {
+  color: #00c6ff;
+}
+
+.event p {
+  color: #ddd;
+}
